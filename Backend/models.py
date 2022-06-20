@@ -19,6 +19,10 @@ class User(Model):
     def return_email(self):
         return email
 
+class ContentType(BaseModel):
+    type: str
+    
+
 # Function to build Pydantic Model off Tortoise Model.
 user_pydantic = pydantic_model_creator(User, name="User", exclude=("is_verified",)) #user can only be verifed through email account
 UserIn_Pydantic = pydantic_model_creator(User, name="UserIn", exclude_readonly=True, exclude=("is_verified","join_date"))#obtain user's data from frontend, doesn't need some data

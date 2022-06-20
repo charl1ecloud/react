@@ -22,25 +22,7 @@ export default function AuthProvider({children}) {
     const [displayUsername, setDisplay] = useState()
     const nav = useNavigate()
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const requestOptions = {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + currentUser,
-              },
-            };
-      
-            const response = await fetch("users/me", requestOptions);
-      
-            if (!response.ok) {
-                setCurrentUser(null);
-            }
-            localStorage.setItem("user", currentUser);
-          };
-          fetchUser();
-        }, [currentUser])
+  
 
     
 

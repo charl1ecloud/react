@@ -6,6 +6,7 @@ from fastapi import FastAPI, File, UploadFile
 from models import *
 from authentication import *
 from sendemail import *
+from upload import *
 
 
 
@@ -79,12 +80,16 @@ async def user_register(user: UserIn_Pydantic):
         "{}, please check you email for verification link".format(new_user.username)
     }
 @app.post("/files")
-async def create_file(file: bytes = File()):
-    return {"file_size": len(file)}
+async def create_file(file: bytes= File()):
+    
+    await uploadtoazure(file)
 
+    
 @app.post("/uploadfile")
-async def create_upload_file(file: UploadFile = File(...)):
-    return {"filename": file.filename}
+async def create_upload_file(file: UploadFile):
+    name = file.filename
+    type = file.content_type
+    return await uploadtoazure(file,name,type)
 
 #sets up Tortoise-ORM on startup and cleans up on teardown.
 register_tortoise(
