@@ -10,6 +10,7 @@ export default  function Login() {
     /* some initialization */
     const emailRef = useRef()
     const passwordRef = useRef()
+    const usernameRef = useRef()
     const nav = useNavigate()
 
     const {login} = useAuth()
@@ -23,7 +24,7 @@ export default  function Login() {
         try{
             SetError('')
             SetLoading(true) /* it is loading, button diabled*/
-            await login(emailRef.current.value, passwordRef.current.value)
+            await login(usernameRef.current.value, passwordRef.current.value)
             nav('/Dashboard')/* go to dashboard */
         } catch{
             SetError('failed to Login')
@@ -48,13 +49,13 @@ export default  function Login() {
               {error && <Alert variant="danger">{error}</Alert>} 
 
               <Form onSubmit={handleSubmit} style={{}}>
-                  <Form.Group id="email">
-                      <Form.Label>Email</Form.Label>
-                      <Form.Control type="email" ref={emailRef} required/>
+                  <Form.Group id="username">
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control type="username" ref={usernameRef} required/>
                   </Form.Group>
                   <Form.Group id="password">
                       <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" ref={passwordRef} required/>
+                      <Form.Control type="password"  ref={passwordRef} required/>
                   </Form.Group>
                   
                   <Button disabled={loading} className='w-100' type="submit"> Log In</Button>
