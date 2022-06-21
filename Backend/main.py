@@ -8,8 +8,6 @@ from authentication import *
 from sendemail import *
 from upload import *
 
-
-
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # When we create an instance of the OAuth2PasswordBearer class we pass in the tokenUrl parameter. 
@@ -41,12 +39,12 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         )
     return await user #If it doesn't see an Authorization header, or the value doesn't have a Bearer token, it will respond with a 401 status code error (UNAUTHORIZED) directly.
 
-@app.get("/users/me")
+@app.get("/users/me") 
 async def user_login(user: UserIn_Pydantic = Depends(get_current_user)):
     return user
 
 
-@app.get("/verification") #opens the link so GET
+@app.get("/verification") #This is for verifying account through email
 async def user_verify(token: str):
     try:
         user = await verify_token(token)
@@ -74,15 +72,13 @@ async def user_register(user: UserIn_Pydantic):
     new_user = await user_pydantic.from_tortoise_orm(user_obj)#convert userobj into pydantic model
     await simple_send(email=[new_user.email], instance=new_user)
 
-    
-
     return {
         "{}, please check you email for verification link".format(new_user.username)
     }
-@app.post("/files")
-async def create_file(file: bytes= File()):
-    
-    await uploadtoazure(file)
+
+@app.get("/showfiles")
+async def showfiles():
+    return showFiles()
 
     
 @app.post("/uploadfile")

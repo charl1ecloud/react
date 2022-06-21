@@ -1,5 +1,4 @@
 /* Member dashboard after signing in*/
-
 import React from "react";
 import { Card } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";

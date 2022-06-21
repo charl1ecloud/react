@@ -1,10 +1,10 @@
 /* access user anywhere in application*/
 /* https://firebase.google.com/docs/auth/web/manage-users */
 
-import React, { useContext, useState, useEffect } from 'react'
-import {auth} from '../firebase'
+import React, { useContext, useState} from 'react'
+// import {auth} from '../firebase'
 import axios from 'axios'
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 /* create a context*/
 const AuthContext = React.createContext()
