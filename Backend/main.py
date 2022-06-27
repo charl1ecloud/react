@@ -96,3 +96,6 @@ register_tortoise(
     add_exception_handlers=True
 
 )
+@app.get("/downloadfile")
+async def downloadfile(name: str):
+    return download(name)

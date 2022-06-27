@@ -16,6 +16,7 @@
     "parcel-bundler": "^1.12.5",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
+    "react-doc-viewer": "^0.1.5",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
@@ -27,8 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8000"
-  ,
+  "proxy": "http://localhost:8000",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -50,5 +50,4 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1"
   }
-  
 }

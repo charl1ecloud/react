@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap'
 import axios from "axios";
 import {useState,useEffect } from "react";
 import {Alert} from "react-bootstrap"
+import ViewNotes from "../ViewNotes/ViewNotes";
 
 export default function Upload() {
   const hiddenFileInput = React.useRef(null)
@@ -35,7 +36,8 @@ export default function Upload() {
     .then(function (response) {
       let msg = ""
       if(response.data != "Something went terribly wrong.."){
-         msg = "Your file "+ response.data +" has been uploaded"}
+         msg = "Your file "+ response.data +" has been uploaded. Refresh the page to see."
+         }
         else{ msg = response.data} 
       
 
@@ -65,7 +67,7 @@ export default function Upload() {
         {file!=null && file[0].name}
         <Button disabled={loading} className="select_button" id="select_button" onClick={handleUpload}>Select File</Button>
         <Button disabled ={loading} className="upload-button" id="upload_button" onClick={handleSubmit}>Upload File</Button>
-        {/* a label which act as a button, change it when needed */}
+        
         <div className="help-text">Or drag your file in</div>
         <div className="uploader-footer">Accepts formats: .docx .pdf</div>
         
@@ -76,10 +78,10 @@ export default function Upload() {
     <div id="alert" className='text-center mb-4'>
     {submitted != null && <Alert variant="info">{submitted}</Alert>}
     </div>
+    <ViewNotes name={name} />
+  
 
-    <div id="displayFiles">
-    <ul>{name.map(n => <li> {n} </li>)}</ul>
-  </div>
+    
     </>
     
   );

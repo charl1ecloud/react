@@ -1,8 +1,10 @@
 from azure.storage.blob.aio import BlobServiceClient
-from azure.storage.blob import ContentSettings
+from azure.storage.blob import ContentSettings, BlobClient, generate_blob_sas, BlobSasPermissions
 from azure.storage.blob import BlobServiceClient as blobClient
 from models import *
 from fastapi import UploadFile
+from datetime import datetime, timedelta
+
 
 async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
     connect_str = "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=notewebapp;AccountKey=Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwOsQK+ASt/7dbUg==;BlobEndpoint=https://notewebapp.blob.core.windows.net/;FileEndpoint=https://notewebapp.file.core.windows.net/;QueueEndpoint=https://notewebapp.queue.core.windows.net/;TableEndpoint=https://notewebapp.table.core.windows.net/"
@@ -39,6 +41,24 @@ def showFiles():
            
         
     return returnList
+
+def download(n):
+    connect_str = "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=notewebapp;AccountKey=Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwOsQK+ASt/7dbUg==;BlobEndpoint=https://notewebapp.blob.core.windows.net/;FileEndpoint=https://notewebapp.file.core.windows.net/;QueueEndpoint=https://notewebapp.queue.core.windows.net/;TableEndpoint=https://notewebapp.table.core.windows.net/"
+    container_name = "notes"
+    blob_service_client = blobClient.from_connection_string(connect_str)
+    key = "Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwOsQK+ASt/7dbUg=="
+
+    blob_client = blob_service_client.get_container_client(container= container_name) 
+    sas_blob = generate_blob_sas(account_name="notewebapp", 
+                                container_name=container_name,
+                                blob_name=n,
+                                account_key=key,
+                                permission=BlobSasPermissions(read=True),
+                                expiry=datetime.utcnow() + timedelta(hours=1))
+    url = 'https://'+"notewebapp"+'.blob.core.windows.net/'+container_name+'/'+n+'?'+sas_blob
+    return url
+
+    
 
 
     
